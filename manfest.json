@@ -1,7 +1,7 @@
 {
-    "name" : "Minha primeira App Progressiva",
-    "short_name" : "primeira PWA",
-    "icons" : [
+    "name": "Minha primeira App Progressiva",
+    "short_name": "primeira PWA",
+    "icons": [
         {
             "src" : "images/pwa-icon-256.png",
             "sizes" : "192x192",
@@ -13,9 +13,9 @@
             "type" : "image/png"
         }
     ],
-    "lang" : "pt-BR",
-    "start_URL" : "/index.html",
-    "display" : "standalone",
-    "background_color" : "white",
-    "theme_color" : "white"
+    "lang": "pt-BR",
+    "start_URL": "/index.html",
+    "display": "standalone",
+    "background_color": "white",
+    "theme_color": "white"
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicio 6</title>
+</head>
+<body>
+<a href="exercicio5.html">Exercicio 5 
+</a>
+<br/>
+<a href="exercicio7.html">Exercicio 7
+</a>
+    <h2>Informe valores positivos (digite -1 para finalizar):</h2>
+    <input type="number" id="valorInput" placeholder="Digite um valor">
+    <button onclick="adicionarValor()">Adicionar</button>
+    <p id="mensagem"></p>
+
+    <script>
+        const valores = [];
+
+        function adicionarValor() {
+            const input = document.getElementById('valorInput');
+            const valor = Number(input.value);
+            const mensagem = document.getElementById('mensagem');
+
+            if (valor === -1) {
+                if (valores.length === 3) {
+                    const maior = Math.max(...valores);
+                    mensagem.textContent = `O maior valor é: ${maior}`;
+                } else {
+                    mensagem.textContent = 'Você deve informar exatamente 3 valores positivos antes de finalizar.';
+                }
+                input.value = '';
+                return;
+            }
+
+            if (valor > 0 && valores.length < 3) {
+                valores.push(valor);
+                mensagem.textContent = `Valor ${valor} adicionado. (${valores.length}/3)`;
+            } else if (valores.length >= 3) {
+                mensagem.textContent = 'Já foram inseridos 3 valores. Digite -1 para finalizar.';
+            } else {
+                mensagem.textContent = 'Por favor, insira apenas valores positivos.';
+            }
+            input.value = '';
+            input.focus();
+        }
+    </script>
+</body>
+</html>

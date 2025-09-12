@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicio 7</title>
+</head>
+<body>
+<a href="exercicio6.html">Exercicio 6
+</a>
+<br/>
+<a href="exercicio8.html">Exercicio 8
+</a>
+    <h2>Valores Ímpares do Vetor</h2>
+    <ul id="impares"></ul>
+
+    <script>
+        const vetor = [1,2,3,4,5,6,7,8,9,10];
+        const impares = vetor.filter(num => num % 2 !== 0);
+
+        const ul = document.getElementById('impares');
+        impares.forEach(num => {
+            const li = document.createElement('li');
+            li.textContent = num;
+            ul.appendChild(li);
+        });
+    </script>
+</body>
+</html>

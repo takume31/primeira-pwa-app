@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicio 8</title>
+</head>
+<body>
+<a href="exercicio7.html">Exercicio 7
+</a>
+<br/>
+<a href="exercicio9.html">Exercicio 9
+</a>
+    <h2>Digite seu nome:</h2>
+    <input type="text" id="nomeInput" placeholder="Seu nome">
+    <button onclick="mostrarNomeInvertido()">Mostrar ao contrário</button>
+    <p id="resultado"></p>
+
+    <script>
+        function mostrarNomeInvertido() {
+            const nome = document.getElementById('nomeInput').value;
+            const invertido = nome.split('').reverse().join('');
+            document.getElementById('resultado').textContent = invertido;
+        }
+    </script>
+</body>
+</html>

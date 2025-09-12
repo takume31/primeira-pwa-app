@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicio 5</title>
+</head>
+<body>
+<a href="exercicio3.html">Exercicio 3
+</a>
+<br/>
+<a href="exercicio6.html">Exercicio 6
+</a>
+    <h1>Tabuada de um Número</h1>
+    <label for="numero">Digite um número inteiro:</label>
+    <input type="number" id="numero" />
+    <button onclick="mostrarTabuada()">Mostrar Tabuada</button>
+    <div id="resultado"></div>
+
+    <script>
+        function mostrarTabuada() {
+            const num = parseInt(document.getElementById('numero').value, 10);
+            let resultado = '';
+            if (isNaN(num)) {
+                resultado = 'Por favor, digite um número inteiro válido.';
+            } else {
+                resultado = `<h2>Tabuada do ${num}</h2><ul>`;
+                for (let i = 0; i <= 10; i++) {
+                    resultado += `<li>${num} x ${i} = ${num * i}</li>`;
+                }
+                resultado += '</ul>';
+            }
+            document.getElementById('resultado').innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>

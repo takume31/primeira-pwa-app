@@ -1,11 +1,12 @@
-import { imageCache, warmStrategyCache } from "workbox-recipes";
+import { offlineFallback, warmStrategyCache } from "workbox-recipes";
 import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
-import { registerRoute } from "workbox-routing";
+import { registerRoute, Route } from "workbox-routing";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 
+// configurando o cache
 const pageCache = new CacheFirst({
-  cacheName: "primeira-pwa-app-cache",
+  cacheName: "primeira-pwa-cache",
   plugins: [
     new CacheableResponsePlugin({
       statuses: [0, 200],
@@ -16,40 +17,43 @@ const pageCache = new CacheFirst({
   ],
 });
 
+//indicando o cache de página
 warmStrategyCache({
-  urls: ["/", "/index.html"],
+  urls: ["/index.html", "/"],
   strategy: pageCache,
 });
+//registrando a rota
 registerRoute(({ request }) => request.mode === "navigate", pageCache);
 
+// configurando cache de assets
 registerRoute(
-  ({ request }) => ["style","script", "worker"].includes(request.destination),
-    new StaleWhileRevalidate({
-      cacheName: "asset-cache",
-      plugins: [
-        new CacheableResponsePlugin({
-          statuses: [0, 200],
-        }),
-      ],
-    })
+  ({ request }) => ["style", "script", "worker"].includes(request.destination),
+  new StaleWhileRevalidate({
+    cacheName: "asset-cache",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
 );
 
-let cacheName = "my-first-pwas";
-let filesCache = ["/", "/index.html", "/CSS/style.css", "/js/main.js", "/manifest.json", "/html/exercicio1", "/html/exercicio2", "/html/exercicio3", "/html/exercicio5", "/html/exercicio6", "/html/exercicio7", "/html/exercicio8", "/html/exercicio9", "/html/exercicio10",
-   "/images/pwa-icon-256.png", "/images/pwa-icon-512.png"];
-
-self.addEventListener("install", (e) => {
-  e.waitUntil(
-    caches.open(cacheName).then(function (cache) {
-      return cache.addAll(filesCache);
-    })
-  );
+// configurando offline fallback
+offlineFallback({
+  pageFallback: "/offline.html",
 });
 
-self.addEventListener("fetch", (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => {
-      return response || fetch(e.request);
-    })
-  );
-});
+registerRoute(
+  ({ request }) => request.destination === "image",
+  new CacheFirst({
+    cacheName: "images",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dias
+      }),
+    ],
+  })
+);
